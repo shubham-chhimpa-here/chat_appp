@@ -1,14 +1,21 @@
 {
   "name": "chat-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is a realtime chat application built using socket.io",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon backend/index.js"
   },
-  "keywords": [],
+  "keywords": [
+    "chat",
+    "application",
+    "realtime",
+    "messaging",
+    "socket",
+    "io"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
