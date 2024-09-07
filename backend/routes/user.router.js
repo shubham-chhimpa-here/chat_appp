@@ -8,9 +8,9 @@ const userRouter = express.Router();
 userRouter.get('/', async (req, res) => {
     try {
         const users = await UserModel.find()
-        res.send({users})
+        res.json({users})
     } catch (error) {
-        res.send({msg: 'something went wrong', error: error.message})
+        res.json({msg: 'something went wrong', error: error.message})
     }
 })
 
@@ -19,15 +19,15 @@ userRouter.post('/create', async (req, res) => {
         const {name, currentSocket } = req.body;
         const user = await UserModel.findOneAndUpdate({name}, {currentSocket})
         if(user) {
-            res.send({msg: {user:user , login: true}})
+            res.json({msg: {user:user , login: true}})
         }
         else {
             const newUser = UserModel({name, currentSocket});
             const x = await newUser.save();
-            res.send({msg: {user: x, login: true}})
+            res.json({msg: {user: x, login: true}})
         }
     } catch (error) {
-        res.send({msg:'something went wrong', error: error.message})
+        res.json({msg:'something went wrong', error: error.message})
     }
 
 })
@@ -35,10 +35,10 @@ userRouter.post('/create', async (req, res) => {
 userRouter.get('/delete', async (req, res) => {
     try {
         const x = await UserModel.deleteMany()
-        res.send({msg: 'deleted', x })
+        res.json({msg: 'deleted', x })
 
     } catch (error) {
-        res.send({msg: 'something went wrong', message: error.message})
+        res.json({msg: 'something went wrong', message: error.message})
         
     }
 })

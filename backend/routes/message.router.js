@@ -8,10 +8,10 @@ export default (io) => {
         try {
             // const {senderId, receiverId, text} = req.body;
             const messages = await MessageModel.find()
-            res.send({messages})
+            res.json({messages})
         
         } catch (error) {
-            res.send({msg: 'something went wrong ', error: error.message})
+            res.json({msg: 'something went wrong ', error: error.message})
         }
         })
         messageRouter.post('/', async (req, res) => {
@@ -23,10 +23,10 @@ export default (io) => {
                     { senderId: receiverId, receiverId: senderId }
                 ]
             })
-            res.send({messages})
+            res.json({messages})
         
         } catch (error) {
-            res.send({msg: 'something went wrong ', error: error.message})
+            res.json({msg: 'something went wrong ', error: error.message})
         }
         })
         
@@ -42,9 +42,9 @@ export default (io) => {
               
                 io.to(receiverSocketId).emit('new-message', newMessage)
 
-                res.send({msg: 'message sent', message: newMessage})
+                res.json({msg: 'message sent', message: newMessage})
             } catch (error) {
-                res.send({msg: 'something went wrong', error: error.message})
+                res.json({msg: 'something went wrong', error: error.message})
                 
             }
         

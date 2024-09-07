@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContent, socket } from '../context/ContextProvider'
-import { io } from 'socket.io-client'
-
 export const MainCom = () => {
   const [users, setUsers] = useState(null)
   const [messages, setMessages] = useState([])
@@ -13,46 +11,48 @@ export const MainCom = () => {
   const [text, setText] = useState('')
 
   const getMessages = () => {
-    const url = `http://localhost:8080/api/message`
-    fetch(url,  
+    const url = `/api/message`
+    fetch(url,
       {
         method: 'post',
-      body: JSON.stringify({senderId: user._id, receiverId : receiver._id}),
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
+        body: JSON.stringify({ senderId: user._id, receiverId: receiver._id }),
+        headers: {
+          'content-type': 'application/json'
+        }
+      })
       .then(res => res.json())
-      .then(res => { 
+      .then(res => {
         // console.log(res)
         setMessages(res.messages)
-       })
+      })
       .catch(e => { console.log(e) })
   }
 
 
-socket.on('new-message', (arr) => {
-  // console.log(arr)
-  setNewMe(arr)
-})
+  socket.on('new-message', (arr) => {
+    // console.log(arr)
+    setNewMe(arr)
+  })
 
 
-useEffect(() => {
-// console.log(newMe.senderId , receiver._id)
-if(newMe.senderId == receiver?._id) {
-  setMessages(state => [ ...state, newMe])
+  useEffect(() => {
+    // console.log(newMe.senderId , receiver._id)
+    if (newMe.senderId == receiver?._id) {
+      setMessages(state => [...state, newMe])
 
-}
-}, [newMe])
+    }
+  }, [newMe])
 
   const getUsers = () => {
-    const url = `http://localhost:8080/api/user`
+    const url = `/api/user`
     fetch(url)
-      .then(res => res.json())
       .then(res => {
-        // console.log(res)
-        setUsers(res.users)
+        console.log(res)
       })
+      // .then(res => {
+      //   // console.log(res)
+      //   setUsers(res.users)
+      // })
       .catch(e => { console.log(e) })
   }
 
@@ -61,7 +61,7 @@ if(newMe.senderId == receiver?._id) {
   }, [])
 
   useEffect(() => {
-    if(!receiver) return
+    if (!receiver) return
     getMessages()
   }, [receiver])
 
@@ -69,7 +69,7 @@ if(newMe.senderId == receiver?._id) {
     if (!receiver) return
 
     e.preventDefault();
-    const url = `http://localhost:8080/api/message/new`
+    const url = `/api/message/new`
     fetch(url, {
       method: 'post',
       body: JSON.stringify({ text, senderId: user._id, receiverId: receiver._id, receiverSocketId: receiver.currentSocket }),
@@ -79,10 +79,10 @@ if(newMe.senderId == receiver?._id) {
 
     })
       .then(res => res.json())
-      .then(res => { 
+      .then(res => {
         // console.log(res) 
-        if(res.message)
-        setMessages(state => [ ...state, res.message])
+        if (res.message)
+          setMessages(state => [...state, res.message])
       })
       .catch(e => { console.log(e) })
       .finally(() => {
@@ -99,7 +99,7 @@ if(newMe.senderId == receiver?._id) {
       border: '1px solid red'
 
     }}>
-      <aside className='border h-full p-8' style={{
+      <aside className='border h-full p-8 flex-1' style={{
         overflow: 'auto'
 
       }}>
@@ -139,16 +139,16 @@ if(newMe.senderId == receiver?._id) {
           height: '80px', width: '50%', position: 'fixed', top: '0px',
           padding: '1rem',
           display: 'flex',
-         
+
         }}>
 
           <form onSubmit={handleSubmit} style={{
 
           }}>
-            <input type="text" value={text} className='border'  onChange={(e) => setText(e.target.value)} />
+            <input type="text" value={text} className='border' onChange={(e) => setText(e.target.value)} />
             <button type="submit">send message to {receiver?.name}</button>
           </form>
-         
+
         </div>
       </main>
     </div>

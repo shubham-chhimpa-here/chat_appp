@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AuthContent } from '../context/ContextProvider'
 import {  useNavigate } from 'react-router-dom'
 
@@ -8,7 +8,7 @@ const Login = () => {
     const {user, setUser, currentSocket} = useContext(AuthContent)
     const handleSubmit = (e) => {
         e.preventDefault();
-        const url = 'http://localhost:8080/api/user/create'
+        const url = '/api/user/create'
         fetch(url, {
             method: 'post',
             body: JSON.stringify({name, currentSocket}),
@@ -26,9 +26,10 @@ const Login = () => {
                 setName("")
             })
     }
-    if(user) {
-        navigate('/')
-    }
+  
+    useEffect(() => {
+        if(user) navigate('/')
+    }, [user])
     return (
         <div>
             <form onSubmit={handleSubmit} style={{

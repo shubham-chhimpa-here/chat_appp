@@ -6,8 +6,12 @@ import cors from 'cors';
 import messageRouter from './routes/message.router.js';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
+import dotenv from 'dotenv';
+import path from 'path';
 const app = express()
 
+dotenv.config()
+const dirname = path.resolve()
 const server = createServer(app);
 const io = new Server(server , {
     cors: {
@@ -17,10 +21,15 @@ const io = new Server(server , {
 })
 
 const port = 8080;
-const url = `mongodb://localhost:27017/chatapp`
+const url = process.env.MONGO_URI
+app.use(express.static(path.join(dirname, 'client','dist')))
 
 connection(url)
-app.use(cors())
+
+app.use(cors({
+    origin: "*",
+    methods: ['GET', 'POST']
+}))
 
 app.use(express.json())
 
@@ -38,6 +47,10 @@ io.on('connection', (socket) => {
 
 app.use('/api/user', userRouter);
 app.use('/api/message', messageRouter(io))
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(dirname, 'client', 'dist', 'index.html'))
+})
 app.get('/ping',(req, res) => {
     res.send('working')
 })
