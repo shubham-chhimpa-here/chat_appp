@@ -67,9 +67,11 @@ export const MainCom = () => {
   }, [receiver])
 
   const handleSubmit = (e) => {
-    if (!receiver) return
-
     e.preventDefault();
+
+    if (!receiver) return
+    if(!text.trim()) return
+
     const url = `/api/message/new`
     fetch(url, {
       method: 'post',
