@@ -48,11 +48,12 @@ export const MainCom = () => {
     fetch(url)
       .then(res => {
         console.log(res)
+        return res.json()
       })
-      // .then(res => {
-      //   // console.log(res)
-      //   setUsers(res.users)
-      // })
+      .then(res => {
+        // console.log(res)
+        setUsers(res.users)
+      })
       .catch(e => { console.log(e) })
   }
 
