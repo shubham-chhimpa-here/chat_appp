@@ -18,7 +18,7 @@ const AuthContextProvider = ({ children }) => {
 
     useEffect(() => {
 
-        socket = io('http://localhost:8080')
+        socket = io()
 
         socket.on('connect', () => {
             console.log('connected')
