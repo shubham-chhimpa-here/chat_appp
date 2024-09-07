@@ -121,7 +121,7 @@ export const MainCom = () => {
         position: 'relative'
       }} >
         {
-          messages?.map((message, index) => {
+         messages && messages.length > 0 && messages?.map((message, index) => {
             return <div key={index} style={{
               border: '1px solid black',
               padding: '1rem',
