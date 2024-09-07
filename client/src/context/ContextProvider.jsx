@@ -21,11 +21,11 @@ const AuthContextProvider = ({ children }) => {
         socket = io()
 
         socket.on('connect', () => {
-            console.log('connected')
+            // console.log('connected')
         })
 
         socket.on('hello', (arr) => {
-            console.log(arr)
+            // console.log(arr)
             setCurrentSocket(arr)
         })
         return () => {

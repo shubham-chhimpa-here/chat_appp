@@ -47,7 +47,7 @@ export const MainCom = () => {
     const url = `/api/user`
     fetch(url)
       .then(res => {
-        console.log(res)
+        // console.log(res)
         return res.json()
       })
       .then(res => {
