@@ -55,7 +55,7 @@ io.on('connection', (socket) => {
         onlineUsers.delete(userId);
         break;
       }
-    })
+    }
 })
 
 
