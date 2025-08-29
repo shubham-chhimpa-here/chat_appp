@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import { AuthContent, socket } from '../context/ContextProvider'
 export const MainCom = () => {
   const [users, setUsers] = useState(null)
