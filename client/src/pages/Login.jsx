@@ -19,6 +19,10 @@ const Login = () => {
             .then(res => res.json())
             .then(res => { console.log(res) 
                 setUser(res.msg.user)
+                            // 🔥 emit userId after login
+          if (currentSocket) {
+            currentSocket.emit("register", res.msg.user._id);
+          }
                
             })
             .catch(e => { console.log(e) })
