@@ -61,6 +61,14 @@ export const MainCom = () => {
     getUsers()
   }, [])
 
+  const messagesEndRef = useRef(null);
+
+useEffect(() => {
+  if (messagesEndRef.current) {
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  }
+}, [messages]);
+
   useEffect(() => {
     if (!receiver) return
     getMessages()
@@ -137,6 +145,8 @@ export const MainCom = () => {
             </div>
           }))
         }
+        {/* 👇 scroll anchor */}
+  <div ref={messagesEndRef}></div>
 
         <div className='border-4' style={{
           height: '80px', width: '50%', position: 'fixed', top: '0px',
