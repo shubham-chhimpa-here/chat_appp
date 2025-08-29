@@ -20,6 +20,9 @@ const io = new Server(server , {
     }
 })
 
+// store online users: { userId: socketId }
+const onlineUsers = new Map();
+
 const port = 8080;
 const url = process.env.MONGO_URI
 app.use(express.static(path.join(dirname, 'client','dist')))
@@ -39,8 +42,19 @@ io.on('connection', (socket) => {
     // socket.on('connect', )
     socket.emit('hello', socket.id)
 
+     // frontend should send userId after login
+  socket.on('register', (userId) => {
+    onlineUsers.set(userId, socket.id);
+    console.log(`User ${userId} registered with socket ${socket.id}`);
+  });
+
     socket.on('disconnect', () => {
         console.log('disconnected')
+         for (let [userId, id] of onlineUsers) {
+      if (id === socket.id) {
+        onlineUsers.delete(userId);
+        break;
+      }
     })
 })
 
