@@ -35,7 +35,7 @@ export default (io, onlineUsers) => {
         
         messageRouter.post('/new', async (req, res) => {
             try {
-                const {senderId, receiverId, text,receiverSocketId} = req.body;
+                const {senderId, receiverId, text} = req.body;
                 const newMessage = new MessageModel({senderId, receiverId, text})
                 await newMessage.save()
                 
