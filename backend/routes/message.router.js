@@ -3,7 +3,7 @@ import  { MessageModel } from '../models/message.model.js';
 
 const messageRouter = express.Router()
 
-export default (io) => {
+export default (io, onlineUsers) => {
     messageRouter.get('/all', async (req, res) => {
         try {
             // const {senderId, receiverId, text} = req.body;
@@ -40,7 +40,12 @@ export default (io) => {
                 await newMessage.save()
                 
               
-                io.to(receiverSocketId).emit('new-message', newMessage)
+                   // get receiver socket id from map
+      const receiverSocketId = onlineUsers.get(receiverId);
+      if (receiverSocketId) {
+        io.to(receiverSocketId).emit('new-message', newMessage);
+      }
+
 
                 res.json({msg: 'message sent', message: newMessage})
             } catch (error) {
