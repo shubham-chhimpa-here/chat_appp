@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { AuthContent } from '../context/ContextProvider'
+import { AuthContent, socket } from '../context/ContextProvider'
 import {  useNavigate } from 'react-router-dom'
 
 const Login = () => {
@@ -20,8 +20,8 @@ const Login = () => {
             .then(res => { console.log(res) 
                 setUser(res.msg.user)
                             // 🔥 emit userId after login
-          if (currentSocket) {
-            currentSocket.emit("register", res.msg.user._id);
+          if (socket) {
+            socket.emit("register", res.msg.user._id);
           }
                
             })
