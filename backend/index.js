@@ -60,7 +60,7 @@ io.on('connection', (socket) => {
 
 
 app.use('/api/user', userRouter);
-app.use('/api/message', messageRouter(io))
+app.use('/api/message', messageRouter(io, onlineUsers))
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(dirname, 'client', 'dist', 'index.html'))
